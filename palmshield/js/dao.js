@@ -250,7 +250,7 @@ async function triggerPayout(sub) {
 
   } catch (e) {
     console.error('Payout error:', e);
-    setTimeout(() => showToast('✓ Threat confirmed — payout error: ' + e.message), 500);
+    setTimeout(() => showToast('Threat confirmed, payout error: ' + e.message), 500);
   }
 
   renderMyHunts();

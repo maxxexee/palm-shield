@@ -121,7 +121,7 @@ async function submitHunt() {
     let imageUrl = null;
     if (state.uploadedFile) {
       imageUrl = await uploadEvidence(state.uploadedFile, state.wallet);
-      if (!imageUrl) showToast('⚠ Image upload failed — submitting without image');
+      if (!imageUrl) showToast('Image upload failed, submitting without image');
     }
 
     const si = getSeverityInfo(state.selectedThreat);
@@ -211,7 +211,7 @@ async function renderLeaderboard() {
     list.innerHTML = '';
 
     if (!rows.length) {
-      list.innerHTML = '<div style="font-family:var(--mono);font-size:10px;color:var(--muted);padding:12px">No hunters yet — be the first.</div>';
+      list.innerHTML = '<div style="font-family:var(--mono);font-size:10px;color:var(--muted);padding:12px">No hunters yet. Be the first.</div>';
       return;
     }
 

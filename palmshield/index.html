@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PalmShield — Dashboard</title>
+  <title>PalmShield Dashboard</title>
 
   <!-- Solana -->
   <script src="https://unpkg.com/@solana/web3.js@1.87.6/lib/index.iife.min.js"></script>
@@ -13,19 +13,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@300;400;500&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 
   <!-- Styles -->
-  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/styling.css"/>
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════════
-     SCREEN 1 — CONNECT WALLET
-════════════════════════════════════════════════ -->
+<!-- SCREEN 1: CONNECT WALLET -->
 <div class="screen active" id="screen-connect">
   <div style="height:100vh;display:flex;align-items:center;justify-content:center;padding:20px">
     <div class="connect-card">
-      <div class="connect-logo">
-        <img src="images/pusd-logo.png" alt="Palm USD Logo" style="height:65px;width:auto;">
-      </div>
       <div class="connect-title">Welcome to<br/>PalmShield</div>
       <p class="connect-desc">Connect your Solana wallet to start hunting threats or join the DAO. Running on <strong style="color:var(--cream)">Devnet</strong>.</p>
       <div class="wallets-grid">
@@ -52,9 +47,7 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════
-     SCREEN 2 — ONBOARDING (ROLE SELECT)
-════════════════════════════════════════════════ -->
+<!-- SCREEN 2: ONBOARDING (ROLE SELECT) -->
 <div class="screen" id="screen-onboard">
   <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px">
     <div class="onboard-wrap">
@@ -69,7 +62,7 @@
           <div class="role-icon">🎯</div>
           <div class="role-name">Hunter</div>
           <div class="role-desc">Find and report malicious wallets on-chain. Drop evidence, earn PUSD when the DAO confirms.</div>
-          <div class="role-reward rr-h">Earn 100–500 PUSD/hunt</div>
+          <div class="role-reward rr-h">Earn 100 to 500 PUSD per hunt</div>
         </div>
         <div class="role-card" id="rc-dao" onclick="selectRole('dao')">
           <div class="check-mark">✓</div>
@@ -82,7 +75,7 @@
           <div class="check-mark">✓</div>
           <div class="role-icon">⚡</div>
           <div class="role-name">Both</div>
-          <div class="role-desc">Hunt threats AND vote on submissions. Full protocol access — for the most committed members.</div>
+          <div class="role-desc">Hunt threats AND vote on submissions. Full protocol access, for the most committed members.</div>
           <div class="role-reward rr-b">Full access + rewards</div>
         </div>
       </div>
@@ -91,13 +84,10 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════
-     SCREEN 3 — HUNTER DASHBOARD
-════════════════════════════════════════════════ -->
+<!-- SCREEN 3: HUNTER DASHBOARD -->
 <div class="screen" id="screen-hunter">
   <nav>
     <div class="nav-brand" onclick="goHome()">
-      <img src="images/pusd-logo.png" alt="Palm USD Logo" style="height:30px;width:auto;">
       <span class="nav-name">PalmShield</span>
       <span class="nav-pill">DEVNET</span>
     </div>
@@ -171,7 +161,7 @@
         <div class="page-header">
           <div class="page-tag">Hunter Dashboard</div>
           <h1 class="page-title">Submit a Threat</h1>
-          <p class="page-desc">Flag a malicious wallet. Drop tx evidence and an image. DAO reviews and if confirmed — PUSD is yours.</p>
+          <p class="page-desc">Flag a malicious wallet. Drop tx evidence and an image. DAO reviews, and if confirmed, PUSD is yours.</p>
         </div>
         <div style="max-width:560px">
           <div class="form-card">
@@ -224,7 +214,7 @@
         <div class="page-header">
           <div class="page-tag">Hunter Dashboard</div>
           <h1 class="page-title">My Submissions</h1>
-          <p class="page-desc">Track your hunts — pending DAO review, active voting, and confirmed payouts.</p>
+          <p class="page-desc">Track your hunts: pending DAO review, active voting, and confirmed payouts.</p>
         </div>
         <div class="stat-row" style="max-width:600px">
           <div class="stat-card">
@@ -267,13 +257,10 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════
-     SCREEN 4 — DAO DASHBOARD
-════════════════════════════════════════════════ -->
+<!-- SCREEN 4: DAO DASHBOARD -->
 <div class="screen" id="screen-dao">
   <nav>
     <div class="nav-brand" onclick="goHome()">
-      <img src="images/pusd-logo.png" alt="Palm USD Logo" style="height:30px;width:auto;">
       <span class="nav-name">PalmShield</span>
       <span class="nav-pill" style="color:#a78bfa;background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.2)">DAO</span>
     </div>
@@ -347,12 +334,12 @@
         <div class="stat-row" style="max-width:100%;margin-bottom:24px">
           <div class="stat-card">
             <div class="stat-label">PENDING</div>
-            <div class="stat-value" id="dao-stat-pending">—</div>
+            <div class="stat-value" id="dao-stat-pending">--</div>
             <div class="stat-delta" style="color:var(--amber)">awaiting vote</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">CONFIRMED</div>
-            <div class="stat-value" id="dao-stat-confirmed">—</div>
+            <div class="stat-value" id="dao-stat-confirmed">--</div>
             <div class="stat-delta delta-up">threats confirmed</div>
           </div>
           <div class="stat-card">
@@ -397,9 +384,7 @@
   </div>
 </div>
 
-<!-- ════════════════════════════════════════════════
-     WALLET DETAIL MODAL
-════════════════════════════════════════════════ -->
+<!-- WALLET DETAIL MODAL -->
 <div class="modal-overlay" id="wallet-modal" onclick="maybeCloseModal(event)">
   <div class="modal modal-inner">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -470,7 +455,6 @@
 <script src="js/config.js"></script>
 <script src="js/state.js"></script>
 <script src="js/utils.js"></script>
-<script src="js/api.js"></script>
 <script src="js/wallet.js"></script>
 <script src="js/onboarding.js"></script>
 <script src="js/render.js"></script>

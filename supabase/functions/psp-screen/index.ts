@@ -1,4 +1,5 @@
-//Edge function for myapi service fetches logs from db for query.
+// Wallet screening API. Reads report rows and scores the wallet for third party callers.
+// Deploy as the psp-screen function: GET ?wallet=<pubkey>&format=json|text
 
 import { serve } from "https://deno.land/std@0.224.0/http/server.ts";
 
@@ -205,7 +206,7 @@ serve(async (req) => {
         "Access-Control-Allow-Origin": "*",
       },
     });
-  } catch (err) {
+  } catch (err: any) {
     return new Response(`PalmShield API error: ${err.message}`, {
       status: 500,
       headers: {

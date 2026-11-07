@@ -14,7 +14,7 @@ window.addEventListener('load', async () => {
 async function connectWallet() {
   const provider = window.solana;
   if (!provider) {
-    showToast('No Solana wallet found — install Phantom or any Solana wallet extension');
+    showToast('No Solana wallet found. Install Phantom or any Solana wallet extension');
     setTimeout(() => window.open('https://phantom.app', '_blank'), 1400);
     return;
   }
@@ -25,7 +25,7 @@ async function connectWallet() {
     await routeConnectedWallet(pubkey);
   } catch (err) {
     if (err.code === 4001) {
-      showToast('Rejected — please approve the connection in your wallet');
+      showToast('Rejected. Approve the connection in your wallet');
     } else {
       showToast('Could not connect: ' + (err.message || 'unknown error'));
     }
@@ -61,13 +61,13 @@ async function routeConnectedWallet(pubkey) {
 
 async function stakePUSD(amountUI) {
   if (!VAULT_ADDRESS || VAULT_ADDRESS.startsWith('PASTE')) {
-    showToast(`⚠ Vault not set — skipping ${amountUI} PUSD stake for now`);
+    showToast(`Vault not set, skipping ${amountUI} PUSD stake for now`);
     await new Promise(r => setTimeout(r, 800));
     return 'dev-bypass';
   }
 
   if (typeof solanaWeb3 === 'undefined') {
-    showToast('Solana library not loaded — please refresh the page');
+    showToast('Solana library not loaded. Refresh the page');
     return null;
   }
 
@@ -84,7 +84,7 @@ async function stakePUSD(amountUI) {
       fromPubkey, { mint: mintPubkey }
     );
     if (!tokenAccounts.value.length) {
-      showToast('No PUSD token account found — make sure you have PUSD on devnet');
+      showToast('No PUSD token account found. Make sure you have PUSD on devnet');
       return null;
     }
 
@@ -92,7 +92,7 @@ async function stakePUSD(amountUI) {
     const fromBalance  = tokenAccounts.value[0].account.data.parsed.info.tokenAmount.uiAmount;
 
     if (fromBalance < amountUI) {
-      showToast(`Insufficient PUSD — need ${amountUI}, you have ${fromBalance.toFixed(2)}`);
+      showToast(`Insufficient PUSD: need ${amountUI}, you have ${fromBalance.toFixed(2)}`);
       return null;
     }
 
@@ -100,7 +100,7 @@ async function stakePUSD(amountUI) {
       vaultPubkey, { mint: mintPubkey }
     );
     if (!vaultAccounts.value.length) {
-      showToast('Vault token account not found — send some PUSD to vault first');
+      showToast('Vault token account not found. Send some PUSD to vault first');
       return null;
     }
     const toATA = vaultAccounts.value[0].pubkey;
@@ -158,12 +158,12 @@ async function stakePUSD(amountUI) {
   } catch (err) {
     const msg = err.message || '';
     if (err.code === 4001 || msg.includes('User rejected')) {
-      showToast('Stake rejected — cancelled in wallet');
+      showToast('Stake rejected, cancelled in wallet');
     } else if (msg.includes('already been processed') || msg.includes('already processed')) {
       showToast(`✓ ${amountUI} PUSD staked`, true);
       return 'already-processed';
     } else if (msg.includes('insufficient lamports') || msg.includes('insufficient funds')) {
-      showToast('Insufficient SOL for fees — airdrop SOL on devnet first');
+      showToast('Insufficient SOL for fees. Airdrop SOL on devnet first');
     } else {
       showToast('Stake failed: ' + msg);
       console.error('Stake error:', err);
@@ -274,7 +274,7 @@ function copyWallet() {
   if (!state.wallet) return;
   navigator.clipboard.writeText(state.wallet)
     .then(() => showToast('✓ Address copied', true))
-    .catch(() => showToast('Copy failed — try manually'));
+    .catch(() => showToast('Copy failed, try manually'));
   document.querySelectorAll('.wallet-menu').forEach(m => m.classList.remove('open'));
 }
 

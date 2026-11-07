@@ -1,64 +1,127 @@
-# Palm Shield Protocol: The Immune System of Solana
+# PalmShield Protocol
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Solana](https://img.shields.io/badge/Solana-Devnet--Beta-blueviolet)](https://solana.com/)
-[![Built with Anchor](https://img.shields.io/badge/Framework-Anchor-orange)](https://www.anchor-lang.com/)
+On chain threat intelligence for Solana, funded by the people who produce it. A researcher
+stakes PUSD to report a malicious wallet, a DAO panel votes on the evidence, and a confirmed
+report pays the researcher from a shared vault and publishes the wallet to a screening API
+any DEX can query.
 
-> **"Millions will be lost. Millions will be paid to save millions."**
+Devnet prototype, built for a Superteam bounty on Palm USD, placed 2nd of 98. Not audited
+and not safe to hold mainnet funds.
 
-Palm Shield is a decentralized, community driven threat intelligence protocol. It turns the "dirty work" of on chain forensics into an incentivized circular economy, providing real time security as a service for the Solana ecosystem.
+## How it works
 
----
+The protocol runs a stake, verify, payout loop.
 
-## ⚡ The Vision
-In April 2026 alone, DeFi exploits have drained over **$600M** from protocols. Static audits are no longer enough. Palm Shield introduces an **active, agentic security layer** that regulates conduct, not code.
+1. **Submit.** A hunter posts a flagged wallet with transaction evidence and an image, and
+   stakes 100 PUSD. The stake is the honesty bond: a wrong call costs money.
+2. **Vote.** A DAO member stakes 50 PUSD and casts a vote on chain. Each vote is its own
+   program derived account, seeded by voter and submission id, so one wallet cannot vote
+   twice on the same report.
+3. **Settle.** Once confirmed votes pass quorum, the vault refunds the hunter stake, pays the
+   bounty, refunds voter stakes, and the report is written to the logbook.
 
-By bridging the gap between independent security researchers (Hunters) and protocols, we've built a system where the "Lazarus style" exit ramps are closed before the first off ramp transaction hits a CEX.
+A confirmed report becomes queryable through the screening function, which scores a wallet
+between 0 and 0.99 from confirmed report count, total flags, and threat type.
 
----
+## What is enforced where
 
-## 🛠 Technical Architecture
+This table is the honest version of the architecture, so read it before the feature list.
 
-Palm Shield operates on a **Stake → Verify → Payout** loop:
+| Rule | Enforced by | Notes |
+| --- | --- | --- |
+| One vote per wallet per submission | On chain | PDA seeded by voter and submission id |
+| Stake before voting | Client | `js/dao.js` transfers before writing the vote row |
+| Quorum | Client | Counted in the browser, see Known gaps |
+| Payout amounts | Edge function | Vault keypair from `VAULT_SECRET_KEY_B58` |
+| Read access to reports | Database | Open |
 
-1.  **Hunter Submission:** Researchers identify malicious clusters or "Bundle Trails" and submit them with a **$PUSD** stake (The Honesty Bond).
-2.  **DAO Consensus:** A decentralized panel of technical auditors reviews the evidence. A threshold of 5 verified votes triggers the smart contract.
-3.  **Vault Execution:** The verified threat is pushed to our Global Registry API, and the Hunter is instantly credited from the **Palm Shield Vault**.
+## Repository layout
 
-## 🚀 Product Features
+```
+programs/palmshield/src/vote.rs    on chain vote program (Anchor)
+supabase/functions/psp-screen/     wallet screening API, public and read only
+supabase/functions/payout/         vault payouts and stake refunds
+db/schema.sql                      tables, indexes and row level security policies
+palmshield/                        dashboard, static HTML with no build step
+  index.html
+  css/styling.css
+  js/                              config, state, wallet, hunter, dao, render
+```
 
-* **On-Chain Threat Registry**: A real-time, queryable database of malicious actors, secured by Solana PDAs.
-* **Incentivized OSINT**: High yield bounties for security researchers, audited by the DAO and paid in **$PUSD**.
-* **Security-as-a-Service API**: Plug-and-play protection for DEXs to intercept "drainers" at the UI/UX level.
-* **Exit-Ramp Forensics**: Detailed "Bundle Trail" reports designed for CEX compliance and threat mitigation.
+## Running the dashboard
 
----
+There is no bundler and no dependency install. Serve the folder over HTTP, since the Solana
+libraries come from a CDN:
 
-## Tech Stack
+```bash
+cd palmshield
+python3 -m http.server 8080
+```
 
-| Layer | Technology |
-| :--- | :--- |
-| **Smart Contracts** | Anchor / Rust on Solana Devnet |
-| **On-Chain Voting** | Program-derived vote records (PDAs) |
-| **Token Flow** | $PUSD SPL token staking and payout flow |
-| **Backend** | Supabase PostgreSQL, Storage, Realtime, Edge Functions |
-| **Frontend** | Lightweight HTML/CSS/JavaScript dashboard |
-| **API** | Supabase Edge Function wallet-screening API |
-| **Wallet** | Phantom / Solana wallet provider |
+Open http://localhost:8080 and connect a Phantom wallet set to devnet.
 
+Set `SUPABASE_ANON` in `palmshield/js/config.js` first, otherwise the dashboard loads but
+cannot read or write reports.
 
----
+## Configuration
 
-## 📥 Quick Start
+| What | Where |
+| --- | --- |
+| Supabase URL and anon key, vault address, PUSD mint, program id, stake and quorum parameters | `palmshield/js/config.js` |
+| Vault keypair for payouts | Supabase secret `VAULT_SECRET_KEY_B58` |
+| Tables and policies | `db/schema.sql`, run once against a fresh Supabase project |
 
-### Prerequisites
-* **Solana CLI**: `1.18.x`
-* **Anchor CLI**: `0.29.0`
-* **Node.js**: `20.x`
-* **Rust**: `1.75+`
+The anon key is public by design. Row level security is what protects the data, and it is
+currently permissive on purpose for the demo. See Known gaps.
 
-## Live Demo
-- Dashboard:  [Video](https://youtu.be/G88SNsxBnOA)
-- Dashboard:  [Palm Shield Dashboard](https://palm-shield-protocol.netlify.app/)
-- Screening API: `https://iffyvycwlhgnsqotlckv.supabase.co/functions/v1/psp-screen`
-- Solana Program: `https://solscan.io/account/AcksH6RgonJwV52Zd59GmxdXUJAMvdU1B3mq8BAEu3bm?cluster=devnet`
+## Deployed addresses (devnet)
+
+| Item | Address |
+| --- | --- |
+| Vote program | `AcksH6RgonJwV52Zd59GmxdXUJAMvdU1B3mq8BAEu3bm` |
+| PUSD mint | `8jMZDTVvVFMGikt78Fpp9W9aTG4z9CP51VbCR85Xd3pQ` |
+| Vault | `6bSGwGnYN18D2etp84YQcRy3F7UgNWyEJPeAdLgwz1rj` |
+
+## Screening API
+
+```bash
+curl "https://iffyvycwlhgnsqotlckv.supabase.co/functions/v1/psp-screen?wallet=<pubkey>&format=json"
+```
+
+Response fields: `risk` (0 to 0.99), `riskLevel` (`LOW`, `MEDIUM`, `HIGH`, `CRITICAL`),
+`tags`, `totalFlags`, `confirmedFlags`. Without a `wallet` parameter the same function
+returns the whole logbook, newest first, capped at 100 rows.
+
+Scoring is transparent rather than clever. A confirmed report adds 0.55, two or more flags
+add 0.2, three or more add 0.15, a drainer or rug pull adds 0.15, and a pending flag adds
+0.05. The total is capped at 0.99.
+
+## Known gaps
+
+Listed because a security repo that hides its own weak points is worth less than one that
+names them.
+
+1. **The payout function is unauthenticated.** `supabase/functions/payout/index.ts` accepts a
+   POST with a hunter wallet, voter wallets and a bounty, then signs transfers from the vault
+   keypair. There is no auth check, and the caller is the browser, so a shared secret in the
+   client would not help. The correct fix is to move quorum evaluation and payout into a
+   server function that reads the vote rows itself and verifies them.
+2. **Quorum is client side.** `js/dao.js` counts votes and decides when to pay, so the payout
+   trigger is a suggestion rather than an enforcement.
+3. **Votes and payouts accept writes from any anon client.** The policies in `db/schema.sql`
+   are `true` for select and insert by design for the demo. That is fine on devnet with play
+   money and wrong the moment a vault holds anything real.
+4. **The program cannot be built from this repo.** No `Anchor.toml` and no `Cargo.toml` are
+   committed. `programs/palmshield/src/vote.rs` is the source of what is deployed, kept here
+   for reading.
+5. **Vote account space is under allocated.** `space = 8 + 32 + 64 + 8 + 8` gives 120 bytes,
+   but two Strings of up to 64 bytes need 4 bytes of length prefix each, so the account needs
+   about 184. Initialisation will fail for long submission ids.
+6. **No tests, no CI.** Everything above was found by reading the code, which is exactly the
+   work a test suite should be doing.
+7. **The live URL is the landing page, not the dashboard.** The dashboard is the
+   `palmshield/` folder in this repo.
+
+## License
+
+MIT

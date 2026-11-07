@@ -1,5 +1,5 @@
-// This beautiful edge function on supabase handles the vault payouts and also locks the stakes until refund conditions/qourum is met.
-// Secret keys exist on supa base aka private key
+// Vault payouts. Refunds the hunter stake plus bounty, and refunds each voter stake once quorum is reached.
+// The vault keypair is read from Supabase secrets and never reaches the client.
 import { getOrCreateAssociatedTokenAccount, createTransferInstruction } from "npm:@solana/spl-token@0.4.14";
 import { Connection, Keypair, PublicKey, Transaction } from "npm:@solana/web3.js@1.87.6";
 import bs58 from "npm:bs58@5.0.0";
@@ -29,12 +29,12 @@ Deno.serve(async (req) => {
   try {
     const connection = new Connection(RPC, "confirmed");
 
-    // vault's own ATA — must exist (you funded it already)
+    // vault's own token account, expected to already be funded
     const { address: vaultATA } = await getOrCreateAssociatedTokenAccount(
       connection, VAULT, MINT, VAULT.publicKey
     );
 
-    // get or CREATE hunter ATA — this is the key fix
+    // create the hunter token account if it does not exist yet
     const { address: hunterATA } = await getOrCreateAssociatedTokenAccount(
       connection, VAULT, MINT, new PublicKey(hunterWallet)
     );

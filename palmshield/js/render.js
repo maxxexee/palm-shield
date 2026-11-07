@@ -91,7 +91,7 @@ function openModal(id) {
   document.getElementById('modal-confirms').textContent   = s.confirms + ' confirm';
   document.getElementById('modal-denies').textContent     = s.denies + ' deny';
   document.getElementById('modal-vote-note').textContent  = s.status === 'confirmed'
-    ? '✓ Quorum reached — threat confirmed.'
+    ? 'Quorum reached, threat confirmed.'
     : `75% confirm quorum needed · currently at ${pct}%`;
 
   // Vote buttons
@@ -100,7 +100,7 @@ function openModal(id) {
     btns.innerHTML = `<div style="font-family:var(--mono);font-size:11px;color:var(--muted);grid-column:span 2;text-align:center;padding:12px">
       ${state.myVotes[s.id]
         ? 'You already voted on this submission.'
-        : 'Voting closed — threat ' + s.status + '.'}
+        : 'Voting closed, threat ' + s.status + '.'}
     </div>`;
   } else {
     btns.innerHTML = `
@@ -208,7 +208,7 @@ async function castVote(dir) {
     if (currentSub.status === 'confirmed') {
       document.getElementById('payout-flash').classList.add('show');
       document.getElementById('payout-amount').textContent    = currentSub.bounty + ' PUSD';
-      document.getElementById('modal-vote-note').textContent  = '✓ Quorum reached — threat confirmed.';
+      document.getElementById('modal-vote-note').textContent  = 'Quorum reached, threat confirmed.';
       btns.innerHTML = `<div style="font-family:var(--mono);font-size:11px;color:var(--green);grid-column:span 2;text-align:center;padding:12px">✓ Threat confirmed · Bounty released</div>`;
     } else {
       btns.innerHTML = `<div style="font-family:var(--mono);font-size:11px;color:var(--muted);grid-column:span 2;text-align:center;padding:12px">Vote cast · ${pct}% confirm (75% needed)</div>`;

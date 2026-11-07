@@ -1,6 +1,4 @@
-/* ════════════════════════════════════════════════
-   Dash Stylin
-   ════════════════════════════════════════════════ */
+/* PalmShield dashboard styles */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -214,12 +212,6 @@ nav {
   max-width: 440px;
   width: 100%;
   text-align: center;
-}
-
-.connect-logo {
-  width: 56px;
-  height: 56px;
-  margin: 0 auto 24px;
 }
 
 .connect-title {
