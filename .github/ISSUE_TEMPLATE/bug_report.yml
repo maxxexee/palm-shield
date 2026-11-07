@@ -1,0 +1,48 @@
+name: Bug report
+description: Report something that does not behave as documented.
+title: "bug: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Do not report security vulnerabilities here. Use the Security tab, then "Report a vulnerability".
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened
+      description: A clear description of the bug.
+      placeholder: The DAO feed stays empty after a report is submitted on devnet.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Serve palmshield over HTTP
+        2. Connect Phantom on devnet
+        3. Submit a report
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      placeholder: macOS 15, Chrome 130, Phantom 24, devnet
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Console output or transaction signature
+      description: Paste logs, the failing request, or a devnet explorer link.
+      render: shell

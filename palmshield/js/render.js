@@ -52,7 +52,7 @@ function renderSubmissionCard(sub, context) {
           ? `<span style="font-family:var(--mono);font-size:10px;color:var(--muted)">You voted: <strong style="color:${alreadyVoted === 'confirm' ? 'var(--green)' : 'var(--red)'}">${alreadyVoted}</strong></span>`
           : `<span style="font-family:var(--mono);font-size:10px;color:var(--green)">${sub.confirms} confirm · ${sub.denies} deny</span>`
         }
-        <span class="sub-comments">${sub.comments.length} comments →</span>
+        <span class="sub-comments">${sub.comments.length} comment${sub.comments.length === 1 ? '' : 's'} →</span>
       </div>
     </div>`;
 

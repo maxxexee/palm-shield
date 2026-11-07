@@ -17,7 +17,7 @@ async function goToDAO() {
   }
 
   document.getElementById('dao-feed').innerHTML = `<div class="empty">
-    <div class="empty-icon" style="animation:pulse 1.5s infinite">⏳</div>
+    <div class="empty-icon" style="animation:pulse 1.5s infinite"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
     <div class="empty-title">Loading submissions...</div>
   </div>`;
 
@@ -64,7 +64,7 @@ function renderDAOFeed() {
 
   if (!state.submissions.length) {
     feed.innerHTML = `<div class="empty">
-      <div class="empty-icon">🏛️</div>
+      <div class="empty-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 4l9 6.5"/><path d="M5 10.5V19M9.5 10.5V19M14.5 10.5V19M19 10.5V19"/><path d="M3 21h18"/></svg></div>
       <div class="empty-title">No submissions yet</div>
       <div class="empty-desc">When hunters submit threat reports they'll appear here.</div>
     </div>`;
@@ -73,7 +73,7 @@ function renderDAOFeed() {
 
   if (!pending.length) {
     feed.innerHTML = `<div class="empty">
-      <div class="empty-icon">✅</div>
+      <div class="empty-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.2 2.3 2.3 4.7-4.8"/></svg></div>
       <div class="empty-title">All caught up</div>
       <div class="empty-desc">No pending submissions right now. Check back soon.</div>
     </div>`;
@@ -92,7 +92,7 @@ function renderDaoHistory() {
 
   if (!voted.length) {
     feed.innerHTML = `<div class="empty">
-      <div class="empty-icon">🗳️</div>
+      <div class="empty-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 10h8M8 14h5"/></svg></div>
       <div class="empty-title">No votes cast yet</div>
       <div class="empty-desc">Your voting history will appear here.</div>
     </div>`;
@@ -243,7 +243,7 @@ async function triggerPayout(sub) {
     if (sub.submitterWalletFull === state.wallet) {
       state.hunterBalance += sub.bounty + 100;
       updateHunterBalance();
-      setTimeout(() => showToast(`🎉 ${sub.bounty + 100} PUSD sent to your wallet!`, true), 500);
+      setTimeout(() => showToast(`${sub.bounty + 100} PUSD sent to your wallet!`, true), 500);
     } else {
       setTimeout(() => showToast('✓ Quorum! Bounty + stakes refunded on-chain', true), 500);
     }

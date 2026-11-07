@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>PalmShield brand plate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif&family=Geist:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #05080a;
+    --cream: #f0ebe0;
+    --muted: #8b949e;
+    --muted2: #5a656e;
+    --green: #22c55e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: Geist, system-ui, sans-serif;
+    overflow: hidden;
+  }
+  .grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34, 197, 94, .05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 197, 94, .05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(120% 110% at 20% 45%, #000 25%, transparent 80%);
+    mask-image: radial-gradient(120% 110% at 20% 45%, #000 25%, transparent 80%);
+  }
+  .glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(48% 70% at 80% 55%, rgba(34, 197, 94, .12), transparent 70%);
+  }
+  .wrap {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    gap: 4vw;
+    padding: 0 clamp(40px, 7vw, 96px);
+  }
+  .left { position: relative; z-index: 2; flex: 1; min-width: 0; }
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: .28em;
+    color: var(--muted);
+  }
+  .eyebrow .mark {
+    width: 20px;
+    height: 20px;
+    stroke: var(--green);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .pill {
+    font-size: 9px;
+    letter-spacing: .18em;
+    color: var(--green);
+    border: 1px solid rgba(34, 197, 94, .3);
+    background: rgba(34, 197, 94, .07);
+    padding: 3px 8px;
+    border-radius: 100px;
+  }
+  h1 {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-weight: 400;
+    font-size: 86px;
+    line-height: .95;
+    letter-spacing: -.02em;
+    margin: 18px 0 20px;
+  }
+  @media (min-height: 560px) {
+    h1 { font-size: 108px; margin: 24px 0 26px; }
+  }
+  .tagline {
+    max-width: 540px;
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .steps {
+    display: flex;
+    gap: 28px;
+    margin-top: 28px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .2em;
+    color: var(--muted);
+  }
+  .steps b { color: var(--green); font-weight: 500; margin-right: 8px; }
+  .right {
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .right::before {
+    content: '';
+    position: absolute;
+    left: -2.2vw;
+    top: 14%;
+    bottom: 14%;
+    width: 1px;
+    background: linear-gradient(transparent, rgba(255, 255, 255, .12), transparent);
+  }
+  .radar { height: min(88vh, 460px); width: auto; overflow: visible; }
+  .lbl {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: .22em;
+    fill: var(--muted2);
+  }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="glow"></div>
+  <div class="wrap">
+    <div class="left">
+      <div class="eyebrow">
+        <svg class="mark" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2.5 20 6v6.2c0 4.6-3.2 8.2-8 9.3-4.8-1.1-8-4.7-8-9.3V6l8-3.5Z" />
+          <path d="m8.6 12.1 2.4 2.4 4.4-4.6" />
+        </svg>
+        <span>PALMSHIELD PROTOCOL</span>
+        <span class="pill">DEVNET</span>
+      </div>
+      <h1>PalmShield</h1>
+      <p class="tagline">Stake-backed threat reports for Solana, verified by a DAO panel and served to any DEX through one screening API.</p>
+      <div class="steps">
+        <span><b>01</b>Stake</span>
+        <span><b>02</b>Verify</span>
+        <span><b>03</b>Settle</span>
+      </div>
+    </div>
+    <div class="right">
+      <svg class="radar" viewBox="0 0 520 520" fill="none" aria-hidden="true">
+        <circle cx="260" cy="260" r="235" stroke="rgba(34,197,94,.10)" />
+        <circle cx="260" cy="260" r="180" stroke="rgba(34,197,94,.09)" stroke-dasharray="2 8" />
+        <circle cx="260" cy="260" r="120" stroke="rgba(34,197,94,.08)" />
+        <circle cx="260" cy="260" r="60" stroke="rgba(255,255,255,.05)" />
+        <path d="M260 25v470M25 260h470" stroke="rgba(255,255,255,.05)" />
+        <path d="M260 260 374 132" stroke="rgba(34,197,94,.35)" stroke-width="1.5" stroke-dasharray="3 5" />
+        <circle cx="374" cy="132" r="13" stroke="rgba(239,68,68,.45)" />
+        <circle cx="374" cy="132" r="6" fill="#ef4444" />
+        <circle cx="168" cy="352" r="13" stroke="rgba(34,197,94,.4)" />
+        <circle cx="168" cy="352" r="6" fill="#22c55e" />
+        <circle cx="318" cy="330" r="4" fill="rgba(240,235,224,.32)" />
+        <circle cx="178" cy="160" r="4" fill="rgba(240,235,224,.32)" />
+        <circle cx="432" cy="300" r="3" fill="rgba(240,235,224,.22)" />
+        <circle cx="120" cy="232" r="3" fill="rgba(240,235,224,.22)" />
+        <text class="lbl" x="396" y="126" fill="#ef4444">FLAGGED</text>
+        <text class="lbl" x="60" y="392" fill="#22c55e">CONFIRMED</text>
+        <text class="lbl" x="330" y="200">QUERY</text>
+      </svg>
+    </div>
+  </div>
+</body>
+</html>

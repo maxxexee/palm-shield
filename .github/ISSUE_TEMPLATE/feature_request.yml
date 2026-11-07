@@ -1,0 +1,39 @@
+name: Feature request
+description: Propose a change to the protocol, API, or dashboard.
+title: "feat: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What is hard or unsafe today? Link the relevant gap in the README if there is one.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What should change, and where does it live (program, edge function, database, dashboard)?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other designs you weighed, and why this one is better.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Anchor program
+        - Screening API
+        - Payout and vault
+        - Database and policies
+        - Dashboard
+        - Docs and tooling
+    validations:
+      required: true

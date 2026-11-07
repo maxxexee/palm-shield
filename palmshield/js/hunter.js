@@ -84,7 +84,7 @@ function handleImageUpload(e) {
     const preview = document.getElementById('upload-preview');
     preview.src           = ev.target.result;
     preview.style.display = 'block';
-    document.querySelector('.upload-zone .upload-icon').textContent = '✓';
+    document.querySelector('.upload-zone .upload-icon').innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>';
     document.querySelector('.upload-zone .upload-text').innerHTML   =
       file.name + '<br/><span style="opacity:.5">Click to change</span>';
   };
@@ -98,9 +98,9 @@ async function submitHunt() {
   const wallet = document.getElementById('sub-wallet').value.trim();
   const remark = document.getElementById('sub-remark').value.trim();
 
-  if (!wallet)               { showToast('⚠ Paste the target wallet address'); return; }
-  if (!state.selectedThreat) { showToast('⚠ Select a threat type');            return; }
-  if (!remark)               { showToast('⚠ Add your evidence / observation');  return; }
+  if (!wallet)               { showToast('Enter the target wallet address'); return; }
+  if (!state.selectedThreat) { showToast('Select a threat type');            return; }
+  if (!remark)               { showToast('Add your evidence or observation');  return; }
 
   _submitting = true;
   const btn = document.querySelector('.btn-submit');
@@ -165,7 +165,7 @@ function _resetSubmitForm() {
   document.querySelectorAll('.threat-opt').forEach(o => o.classList.remove('sel'));
   document.getElementById('bounty-display').textContent    = '250 PUSD';
   document.getElementById('upload-preview').style.display  = 'none';
-  document.querySelector('.upload-zone .upload-icon').textContent = '📎';
+  document.querySelector('.upload-zone .upload-icon').innerHTML = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5 12.5 20a6 6 0 0 1-8.5-8.5l8-8a4 4 0 0 1 5.7 5.7l-8 8a2 2 0 0 1-2.8-2.8l7.4-7.4"/></svg>';
   document.querySelector('.upload-zone .upload-text').innerHTML   =
     'Click to upload or drag & drop<br/><span style="opacity:.5">PNG, JPG, WEBP · max 5MB</span>';
   state.selectedThreat = null;
@@ -182,7 +182,7 @@ function renderMyHunts() {
 
   if (!mine.length) {
     feed.innerHTML = `<div class="empty">
-      <div class="empty-icon">🎯</div>
+      <div class="empty-icon"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3"/></svg></div>
       <div class="empty-title">No hunts yet</div>
       <div class="empty-desc">Submit your first threat report to get started.<br/>Confirmed hunts pay out instantly in PUSD.</div>
     </div>`;
