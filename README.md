@@ -30,7 +30,7 @@ This table is the honest version of the architecture, so read it before the feat
 | Rule | Enforced by | Notes |
 | --- | --- | --- |
 | One vote per wallet per submission | On chain | PDA seeded by voter and submission id |
-| Stake before voting | Client | `js/dao.js` transfers before writing the vote row |
+| Stake before voting | Client | `palmshield/js/dao.js` transfers before writing the vote row |
 | Quorum | Client | Counted in the browser, see Known gaps |
 | Payout amounts | Edge function | Vault keypair from `VAULT_SECRET_KEY_B58` |
 | Read access to reports | Database | Open |
@@ -106,7 +106,7 @@ names them.
    keypair. There is no auth check, and the caller is the browser, so a shared secret in the
    client would not help. The correct fix is to move quorum evaluation and payout into a
    server function that reads the vote rows itself and verifies them.
-2. **Quorum is client side.** `js/dao.js` counts votes and decides when to pay, so the payout
+2. **Quorum is client side.** `palmshield/js/dao.js` counts votes and decides when to pay, so the payout
    trigger is a suggestion rather than an enforcement.
 3. **Votes and payouts accept writes from any anon client.** The policies in `db/schema.sql`
    are `true` for select and insert by design for the demo. That is fine on devnet with play
